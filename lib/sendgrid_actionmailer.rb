@@ -185,12 +185,17 @@ module SendGridActionMailer
           sendgrid_mail.add_personalization(setup_personalization(mail, p))
         end
       end
-      if (mail.to && mail.to.any?) || (mail.cc && mail.cc.any?) || (mail.bcc && mail.bcc.any?)
-        personalization = setup_personalization(mail, {})
-        to_emails(mail.to).each { |to| personalization.add_to(to) }
-        to_emails(mail.cc).each { |cc| personalization.add_cc(cc) }
-        to_emails(mail.bcc).each { |bcc| personalization.add_bcc(bcc) }
-        sendgrid_mail.add_personalization(personalization)
+      begin
+        if (mail.to && mail.to.any?) || (mail.cc && mail.cc.any?) || (mail.bcc && mail.bcc.any?)
+          personalization = setup_personalization(mail, {})
+          to_emails(mail.to).each { |to| personalization.add_to(to) }
+          to_emails(mail.cc).each { |cc| personalization.add_cc(cc) }
+          to_emails(mail.bcc).each { |bcc| personalization.add_bcc(bcc) }
+          sendgrid_mail.add_personalization(personalization)
+        end
+      rescue => e
+        p mail.inspect
+        raise e
       end
     end
 
