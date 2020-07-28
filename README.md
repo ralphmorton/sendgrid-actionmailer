@@ -225,7 +225,7 @@ Data to provide for feeding the new dynamic templates in Sendgrid with valueable
 
 ### personalizations (json)
 
-Allows providing a customized [personalizations](https://sendgrid.com/docs/for-developers/sending-email/personalizations/) array for the v3 Mail Send endpoint. This allows customizing how an email is sent and also allows sending multiple different emails to different recipients with a single API call.
+Allows providing a customized [personalizations](https://sendgrid.com/docs/for-developers/sending-email/personalizations/) hash for the v3 Mail Send endpoint. This allows customizing how an email is sent and also allows sending multiple different emails to different recipients with a single API call.
 
 The personalizations object supports:
 
@@ -247,10 +247,12 @@ Also note that substitutions will not work with dynamic templates.
 Example usage:
 
 ```
-mail(subject: 'default subject', 'email body', personalizations: [
-  { to: [{ email: 'example@example.com' }]},
-  { to: [{ email: 'example2@example.com' }]}
-])
+mail(subject: 'default subject', 'email body', personalizations: {
+  to: [
+    { email: 'example1@example.com' },
+    { email: 'example2@example.com' }
+  ]
+})
 ```
 
 ### Unsubscribe Links
